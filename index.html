@@ -1,55 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="Imagenes/INSTA-MINILOGO.jpeg" />
     <link rel="stylesheet" href="styles.css" />
     <title>Instagram</title>
+
+    <!-- SDKs de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="left-section">
-        <img src="Imagenes/mobileImage.jpeg" alt="" />
+        <img src="Imagenes/mobileImage.jpeg" alt="Imagen móvil" />
       </div>
       <div class="right-section">
         <div class="login-box">
-          <img src="Imagenes/instaTextLogo.png" alt="" class="instaTextLogo" />
-          <input
-            type="text"
-            placeholder="Email address, username, phone number"
-          />
-
-          <input type="password" placeholder="Password" />
-
-          <button class="login-btn">Log in</button>
+          <img src="Imagenes/instaTextLogo.png" alt="Logo de Instagram" class="instaTextLogo" />
+          <input type="email" id="email" placeholder="Correo electrónico, nombre de usuario o teléfono" required />
+          <input type="password" id="password" placeholder="Contraseña" required />
+          <button class="login-btn" onclick="iniciarSesion()">Iniciar sesión</button>
           <div class="divider">
             <hr class="line" />
-            <p>OR</p>
+            <p>O</p>
             <hr class="line" />
           </div>
-
           <div class="login-with-facebook">
-            <img src="Imagenes/fbicon.png" alt="" class="fb-img" />
-            <a href="#" class="facebook-login">Log in with Facebook</a>
+            <img src="Imagenes/fbicon.png" alt="Icono de Facebook" class="fb-img" />
+            <a href="#" class="facebook-login">Iniciar sesión con Facebook</a>
           </div>
-
           <div>
-            <a href="#" class="forgot-password">Forgotten your password?</a>
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
           </div>
         </div>
         <div class="signup-box">
-          <p>Don't have an account? <a href="#">Sign up</a></p>
+          <p>¿No tienes cuenta? <a href="#">Regístrate</a></p>
         </div>
         <div class="download-section">
-          <p>Get the app</p>
-
+          <p>Obtén la aplicación</p>
           <div class="app-buttons">
-            <img src="Imagenes/appstore.png" alt="" class="app-btn"/>
-            <img src="Imagenes//playstore.png" alt="" class="app-btn" />
+            <img src="Imagenes/appstore.png" alt="App Store" class="app-btn" />
+            <img src="Imagenes/playstore.png" alt="Google Play" class="app-btn" />
           </div>
         </div>
       </div>
     </div>
+
+    <script>
+      // Configuración de Firebase
+      const firebaseConfig = {
+       apiKey: "AIzaSyC2nVnVnRj4DEIwitaLNHMITinqmpNjdpE",
+       authDomain: "inst-d794a.firebaseapp.com",
+       projectId: "inst-d794a",
+       storageBucket: "inst-d794a.firebasestorage.app",
+       messagingSenderId: "908671837053",
+       appId: "1:908671837053:web:86ce4ca17482b51da2e214"
+      };
+
+      // Inicializar Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      const auth = firebase.auth();
+
+      // Función para iniciar sesión
+      function iniciarSesion() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        // Validar campos vacíos
+        if (email === '' || password === '') {
+          alert('Por favor, completa todos los campos.');
+          return;
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+          .then(userCredential => {
+            const user = userCredential.user;
+            alert(`¡Bienvenido, ${user.email}!`);
+            // Redirigir a la página principal
+            window.location.href = '/home.html';
+          })
+          .catch(error => {
+            alert(`Error: ${error.message}`);
+          });
+      }
+    </script>
   </body>
 </html>
