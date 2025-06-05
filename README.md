@@ -10,4 +10,3 @@ Este proyecto es una réplica visual de la interfaz de Instagram, creado con fin
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/claretd23/Instagram.git
-![Uploading image.png…]()
